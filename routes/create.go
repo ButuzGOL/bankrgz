@@ -14,13 +14,14 @@ import (
 
 func CreateBankBranch(c *gin.Context) {
 	var DB = database.ConnectDB()
-	var bankBankConnection = getcollection.GetCollection(DB, "BankBranches")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-	bankBranch := new(model.BankBranch)
 	defer cancel()
 
-	if err := c.ShouldBindJSON(bankBranch); err != nil {
+	var bankBankConnection = getcollection.GetCollection(DB, "BankBranches")
+
+	var bankBranch model.BankBranch
+
+	if err := c.ShouldBindJSON(&bankBranch); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
