@@ -1,9 +1,9 @@
 package routes
 
 import (
-	getcollection "bankrgz/Collection"
-	model "bankrgz/Model"
-	database "bankrgz/databases"
+	getcollection "bankbranches/Collection"
+	model "bankbranches/Model"
+	database "bankbranches/databases"
 	"context"
 	"net/http"
 	"time"
@@ -14,19 +14,19 @@ import (
 
 func CreateBankBranch(c *gin.Context) {
 	var DB = database.ConnectDB()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	var bankBankConnection = getcollection.GetCollection(DB, "BankBranches")
+	var collection = getcollection.GetCollection(DB, "BankBranches")
 
 	var bankBranch model.BankBranch
-
 	if err := c.ShouldBindJSON(&bankBranch); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	bankBranchPayload := model.BankBranch{
+	payload := model.BankBranch{
 		ID:       primitive.NewObjectID(),
 		Number:   bankBranch.Number,
 		District: bankBranch.District,
@@ -34,11 +34,11 @@ func CreateBankBranch(c *gin.Context) {
 		Address:  bankBranch.Address,
 	}
 
-	result, err := bankBankConnection.InsertOne(ctx, bankBranchPayload)
+	result, err := collection.InsertOne(ctx, payload)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Posted successfully", "Data": map[string]interface{}{"data": result}})
+	c.JSON(http.StatusCreated, gin.H{"message": "Created successfully", "Data": map[string]interface{}{"data": result}})
 }

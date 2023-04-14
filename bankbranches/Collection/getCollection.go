@@ -5,6 +5,6 @@ import (
 )
 
 func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
-	collection := client.Database("BankRGZ").Collection("BankBranches")
+	collection := client.Database("bankbranches").Collection(collectionName)
 	return collection
 }

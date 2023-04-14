@@ -1,4 +1,4 @@
-module bankrgz
+module bankbranches
 
 go 1.20
 
