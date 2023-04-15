@@ -1,0 +1,22 @@
+{
+ "bankBranchesReviews": [
+  {
+   "id": "",
+   "bankBranchId": "1",
+   "comment": "",
+   "rating": 0
+  },
+  {
+   "id": "01017741-2382-439c-ab18-70794097e250",
+   "bankBranchId": "1",
+   "comment": "Abc",
+   "rating": 5
+  },
+  {
+   "id": "79e18338-bd83-40ef-8fe8-ba2a77d70a3c",
+   "bankBranchId": "1",
+   "comment": "Abc",
+   "rating": 5
+  }
+ ]
+}
