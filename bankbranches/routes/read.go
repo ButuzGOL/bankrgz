@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func ReadBankBranch(c *gin.Context) {
@@ -30,6 +31,10 @@ func ReadBankBranch(c *gin.Context) {
 	res := map[string]interface{}{"data": result}
 
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			c.JSON(http.StatusNotFound, gin.H{"message": err})
+			return
+		}
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
 		return
 	}

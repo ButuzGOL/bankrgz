@@ -6,12 +6,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	guuid "github.com/google/uuid"
 )
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
 
 	router.GET("/bankBranchReviews/:bankBranchId", ListBankBranchReviews)
 	router.POST("/bankBranchReviews/:bankBranchId", CreateBankBranchReview)
