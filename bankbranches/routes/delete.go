@@ -32,7 +32,7 @@ func DeleteBankBranch(c *gin.Context) {
 	}
 
 	if result.DeletedCount < 1 {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "No data to delete"})
+		c.JSON(http.StatusNotFound, gin.H{"message": "No data to delete"})
 		return
 	}
 
